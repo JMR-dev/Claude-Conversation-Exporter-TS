@@ -4,24 +4,25 @@
   "description": "Export your Claude.ai conversations in various formats - Chrome and Firefox extension with TypeScript support",
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
-    "build:firefox": "bash build-firefox.sh",
-    "build:chrome": "bash build-chrome.sh",
-    "dev": "vite build --watch",
-    "dev:firefox": "vite build --mode firefox --watch",
-    "dev:chrome": "vite build --mode chrome --watch",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "format": "prettier --check \"src/**/*.{ts,html,css,json}\"",
-    "format:fix": "prettier --write \"src/**/*.{ts,html,css,json}\"",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "dev:chrome": "wxt -b chrome",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "build:chrome": "wxt build -b chrome",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "zip:chrome": "wxt zip -b chrome",
+    "type-check": "wxt type-check",
+    "lint": "eslint entrypoints/**/*.ts src/**/*.ts",
+    "lint:fix": "eslint entrypoints/**/*.ts src/**/*.ts --fix",
+    "format": "prettier --check \"**/*.{ts,html,css,json}\"",
+    "format:fix": "prettier --write \"**/*.{ts,html,css,json}\"",
     "test": "vitest run",
     "test:ui": "vitest run --ui",
     "test:coverage": "vitest run --coverage",
-    "check": "pnpm type-check && pnpm lint && pnpm format && pnpm test:run",
-    "firefox:run": "web-ext run --source-dir=dist/firefox --start-url https://claude.ai",
-    "chrome:run": "echo 'Load dist/chrome in chrome://extensions with Developer Mode enabled'",
-    "clean": "rm -rf dist"
+    "check": "pnpm type-check && pnpm lint && pnpm format && pnpm test",
+    "clean": "rm -rf .wxt .output dist"
   },
   "keywords": [
     "claude",
@@ -37,7 +38,6 @@
   "packageManager": "pnpm@10.18.1",
   "devDependencies": {
     "@eslint/js": "^9.38.0",
-    "@samrum/vite-plugin-web-extension": "^5.1.1",
     "@types/chrome": "^0.1.24",
     "@types/firefox-webext-browser": "^143.0.0",
     "@types/jszip": "^3.4.0",
@@ -53,10 +53,9 @@
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1",
-    "vite": "^7.1.10",
-    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4",
-    "web-ext": "^9.0.0"
+    "web-ext": "^9.0.0",
+    "wxt": "^0.20.11"
   },
   "dependencies": {
     "jszip": "^3.10.1"

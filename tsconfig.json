@@ -38,25 +38,13 @@
     /* Path Mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["entrypoints/*"],
+      "~/*": ["src/*"]
     },
 
     /* Browser Extension Types */
     "types": ["firefox-webext-browser", "vitest/globals"]
   },
-  "include": [
-    "src/**/*.ts",
-    "vite.config.ts",
-    "vite.content.config.ts",
-    "vite.content-chrome.config.ts",
-    "vite.content-firefox.config.ts",
-    "eslint.config.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/**/*.js",
-    "src/chrome/scripts/**/*",
-    "src/firefox/scripts/**/*"
-  ]
+  "include": ["entrypoints/**/*.ts", "src/**/*.ts", "wxt.config.ts", "*.config.ts", ".wxt/types/**/*.d.ts"],
+  "exclude": ["node_modules", "dist", ".wxt/**/*", "!.wxt/types/**/*.d.ts"]
 }

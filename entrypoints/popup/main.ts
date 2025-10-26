@@ -1,10 +1,9 @@
-// @ts-nocheck - File is compiled by Vite, not included in tsconfig.json
 /**
- * Firefox Popup Script
- * Handles user interactions in the extension popup
+ * Popup script for Claude Conversation Exporter
+ * Handles the extension popup UI and user interactions
  */
 
-import type { ExtensionMessage, ExtensionResponse } from '../../types';
+import type { ExtensionResponse } from '../../src/types';
 
 /**
  * Get organization ID from storage
@@ -138,13 +137,10 @@ async function handleExportCurrent(): Promise<void> {
 
       if (response?.success) {
         showStatus('Conversation exported successfully!', 'success');
-      } else if (response?.error) {
-        // Only show error if there's an actual error message
-        console.error('Export failed:', response.error, response?.details);
-        showStatus(response.error, 'error');
       } else {
-        // No explicit success or error - assume download was triggered
-        showStatus('Download started...', 'success');
+        const errorMsg = response?.error ?? 'Export failed';
+        console.error('Export failed:', errorMsg, response?.details);
+        showStatus(errorMsg, 'error');
       }
     } catch (sendError) {
       // Handle "Could not establish connection" error
@@ -168,9 +164,7 @@ async function handleExportCurrent(): Promise<void> {
  * Handle browse conversations button
  */
 function handleBrowseConversations(): void {
-  void browser.tabs.create({
-    url: browser.runtime.getURL('src/firefox/scripts/browse.html'),
-  });
+  void browser.tabs.create({ url: browser.runtime.getURL('browse.html') });
 }
 
 /**
@@ -223,13 +217,10 @@ async function handleExportAll(): Promise<void> {
         } else {
           showStatus(`Exported ${response.count ?? 0} conversations!`, 'success');
         }
-      } else if (response?.error) {
-        // Only show error if there's an actual error message
-        console.error('Export failed:', response.error, response?.details);
-        showStatus(response.error, 'error');
       } else {
-        // No explicit success or error - assume download was triggered
-        showStatus('Download started...', 'success');
+        const errorMsg = response?.error ?? 'Export failed';
+        console.error('Export failed:', errorMsg, response?.details);
+        showStatus(errorMsg, 'error');
       }
     } catch (sendError) {
       // Handle "Could not establish connection" error

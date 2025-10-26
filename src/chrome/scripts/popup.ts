@@ -170,7 +170,9 @@ async function handleExportCurrent(): Promise<void> {
  * Handle browse conversations button
  */
 function handleBrowseConversations(): void {
-  void chrome.tabs.create({ url: chrome.runtime.getURL('src/chrome/scripts/browse.html') });
+  void chrome.tabs.create({
+    url: chrome.runtime.getURL('src/chrome/scripts/browse.html'),
+  });
 }
 
 /**
